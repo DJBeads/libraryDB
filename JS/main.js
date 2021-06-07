@@ -14,9 +14,10 @@ async function run() {
 
         conn = await pool.getConnection();
         let arg = process.argv[2];
-        const bookTitle = await conn.query("SELECT name FROM books WHERE name = ?", [arg]);
+        const book = await conn.query
+        ("SELECT books.name AS book, libraries.name AS library FROM books JOIN libraries ON books.book_id = libraries.library_FK where books.name =?", [arg]);
 
-        console.log(bookTitle);
+        console.log(book);
 
     } catch (err) {
         throw err;
